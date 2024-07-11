@@ -1,0 +1,59 @@
+<div>
+    <label>Hue: <input type=range id=rHue max=359 value=0></label>
+    <label>Saturation: <input type=range id=rSat value=0></label>
+    <label>Lightness: <input type=range id=rL max=250 value=110></label>
+    <label>Use "color" instead: <input type=checkbox id=cColor></label>
+  </div>
+  <canvas id=c></canvas>
+
+<script>
+    var ctx = c.getContext("2d");
+var img = new Image(); img.onload = demo; img.src = "https://storage.googleapis.com/pimassest1/asset/LILI-SC/swatches/color.png";
+function demo() {c.width = this.width>>1; c.height = this.height>>1; render()}
+
+function render() {
+  var hue = +rHue.value, sat = +rSat.value, l = +rL.value;
+  
+  ctx.clearRect(0, 0, c.width, c.height);
+  ctx.globalCompositeOperation = "source-over";
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+
+  console.log('h',hue)
+  console.log('s',sat)
+  console.log('l',l)
+
+  if (!!cColor.checked) {
+    // use color blending mode
+    ctx.globalCompositeOperation = "color";
+    ctx.fillStyle = "hsl(" + hue + "," + sat + "%, 50%)";
+    ctx.fillRect(0, 0, c.width, c.height);
+  }
+  else {
+    // adjust "lightness"
+    ctx.globalCompositeOperation = l < 100 ? "color-burn" : "color-dodge";
+    // for common slider, to produce a valid value for both directions
+    l = l >= 100 ? l - 100 : 100 - (100 - l);
+    ctx.fillStyle = "hsl(0, 50%, " + l + "%)";
+    ctx.fillRect(0, 0, c.width, c.height);
+    
+    // adjust saturation
+    ctx.globalCompositeOperation = "saturation";
+    ctx.fillStyle = "hsl(0," + sat + "%, 50%)";
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    // adjust hue
+    ctx.globalCompositeOperation = "hue";
+    ctx.fillStyle = "hsl(" + hue + ",1%, 50%)";
+    ctx.fillRect(0, 0, c.width, c.height);
+  }
+  
+  // clip
+  ctx.globalCompositeOperation = "destination-in";
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+
+  // reset comp. mode to default
+  ctx.globalCompositeOperation = "source-over";
+}
+
+rHue.oninput = rSat.oninput = rL.oninput = cColor.onchange = render;
+</script>
