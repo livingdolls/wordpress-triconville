@@ -1,8 +1,8 @@
 <?php
+get_header();
 echo do_shortcode("[hfe_template id='98']");
 $character_slug = get_query_var('product');
 ?>
-    <script src="https://cdn.tailwindcss.com"></script>
 <div style='background-color:rgba(0, 0, 0, 0)'>
     <div class="container px-5 py-24 mx-auto" style="cursor: auto;">
         <div class="lg:w-4/5 mx-auto flex flex-wrap">
@@ -71,9 +71,13 @@ $character_slug = get_query_var('product');
                     </span>
                 </div>
                 <p class="leading-relaxed" id="product__desc"></p>
-                <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+                <div class="flex flex-col align mt-6 pb-5 border-b-2 border-gray-100 mb-5">
                     <div class="flex gap-1" id="option_1">
                         <span class="mr-3" id="label_1"></span>
+                    </div>
+
+                    <div class="flex gap-1" id="option_2">
+                        <span class="mr-3" id="label_2"></span>
                     </div>
                 </div>
             </div>
@@ -89,6 +93,9 @@ $character_slug = get_query_var('product');
             headers: {
                 'Authorization': 'Token 09633df1426fce26fc53de676e8bb65f47a0dcf1',
             },
+            beforeSend: () => {
+                // TODO ::SKELETON
+            },
             success: (res) => {
                 console.log(res);
                 $('#product__name').html(res.name);
@@ -100,6 +107,15 @@ $character_slug = get_query_var('product');
                     res.option1.forEach(opt => {
                         $('#option_1').append(
                             `<button class="w-5 h-5 rounded-full" style="background-image:url(${opt.img_link})"></button>`
+                        );
+                    });
+                }
+
+                if (res.option2 && Array.isArray(res.option2)) {
+                    $('#label_2').text(res.label2)
+                    res.option2.forEach(opt2 => {
+                        $('#option_2').append(
+                            `<button class="w-5 h-5 rounded-full" style="background-image:url(${opt2.img_link})"></button>`
                         );
                     });
                 }

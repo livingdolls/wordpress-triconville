@@ -1,0 +1,134 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+    /* Your CSS styles */
+    .navbar {
+        overflow: hidden;
+        background-color: #333;
+        font-family: Arial;
+        width: 100%;
+    }
+    .navbar a {
+        float: left;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+    .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+    }
+    .navbar a:hover, .dropdown:hover .dropbtn {
+        background-color: red;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .child__category__list {
+        position:absolute;
+        left: 100%;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+    }
+</style>
+
+<div class="navbar" id="navbar__category"></div> 
+
+<script>
+$(document).ready(function(){
+    $.ajax({
+        url: "http://192.168.88.178:82/?rest_route=/wp/v2/top-nav",
+        type: 'GET',
+        success: function(res) {
+            res.forEach(e => {
+                if (e.name === 'Categories') {
+                    $.ajax({
+                        url: "https://platform.indospacegroup.com/v1_categories/",
+                        type: 'GET',
+                        headers: {
+                            'Authorization' : 'Token 09633df1426fce26fc53de676e8bb65f47a0dcf1',
+                        },
+                        success: function(categoriesRes) {
+                            let categoriesHtml = '<div id="categories__dropdown" class="dropdown-content">';
+                            categoriesRes.results.forEach(k => {
+                                categoriesHtml += `
+                                    <div class="child__category">
+                                        <a>${k.name}</a>
+                                        <ul class="child__category__list" style="display:none;">`;
+                                k.child_categories.forEach(l => {
+                                    categoriesHtml += `<li><a href="http://192.168.88.178:82/categories/${l.id}">${l.name}</a></li>`;
+                                });
+
+                                categoriesHtml += `</ul></div>`;
+                            });
+                            categoriesHtml += '</div>';
+
+                            $('#navbar__category').append(`
+                                <div class="dropdown categories__nav">
+                                    <button class="dropbtn">${e.name}
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    ${categoriesHtml}
+                                </div>
+                            `);
+
+                            $('.navbar').on('mouseover', '.child__category', function(){
+                                $(this).find('.child__category__list').show();
+                            }).on('mouseout', '.child__category', function(){
+                                $(this).find('.child__category__list').hide();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching categories:', error);
+                        }
+                    });
+                } else {
+                    $('#navbar__category').append(`
+                        <div class="dropdown">
+                            <a href="${e.href}" class="dropbtn">${e.name}
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                        </div>
+                    `);
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching top navigation items:', error);
+        }
+    });
+});
+</script>

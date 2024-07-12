@@ -244,24 +244,6 @@ add_action( 'rest_api_init', function() {
 
 });
 
-add_action('init', function(){
-    add_rewrite_rule( 'characters/([a-z]+)[/]?$', 'index.php?character=$matches[1]', 'top' );
-});
-
-add_filter( 'query_vars', function( $query_vars ) {
-    $query_vars[] = 'character';
-    return $query_vars;
-} );
-
-add_action( 'template_include', function( $template ) {
-
-    if ( get_query_var( 'character' ) == false || get_query_var( 'character' ) == '' ) {
-        return $template;
-    }
- 
-    return get_template_directory() . '/character.php';
-} );
-
 
 // CUSTOM Collections
 add_action('init', function(){
@@ -279,7 +261,7 @@ add_action( 'template_include', function( $template ) {
         return $template;
     }
  
-    return get_template_directory() . '/collections.php';
+    return get_template_directory() . '/pages/collections.php';
 } );
 
 // CUSTOM product details
@@ -298,5 +280,34 @@ add_action( 'template_include', function( $template ) {
         return $template;
     }
  
-    return get_template_directory() . '/products.php';
+    return get_template_directory() . '/pages/products.php';
 } );
+
+// CUSTOM catalog
+add_action('init', function(){
+    add_rewrite_rule( 'categories/([a-z0-9]+)[/]?$', 'index.php?category=$matches[1]', 'top' );
+});
+
+add_filter( 'query_vars', function( $query_vars ) {
+    $query_vars[] = 'category';
+    return $query_vars;
+} );
+
+add_action( 'template_include', function( $template ) {
+
+    if ( get_query_var( 'category' ) == false || get_query_var( 'category' ) == '' ) {
+        return $template;
+    }
+ 
+    return get_template_directory() . '/pages/category.php';
+} );
+
+// TAILWIND INIT
+
+function enqueue_styles() {
+
+    wp_enqueue_style('tailwind-style', get_template_directory_uri() . '/output.css', array(), '1.0.0');
+
+}
+
+add_action('wp_enqueue_scripts', 'enqueue_styles');
