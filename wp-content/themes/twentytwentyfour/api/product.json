@@ -1,0 +1,81 @@
+[
+    {
+        "id" : "",
+        "name" : "Sofa",
+        "children" : [
+            {
+                "id" : 39,
+                "name" : "Outdoor Loveseats",
+                "param" : ""
+            },
+            {
+                "id" : 30,
+                "name" : "Outdoor Sofa",
+                "param" : ""
+            },
+            {
+                "id" : 36,
+                "name" : "Outdoor Modular",
+                "param" : ""
+            }
+        ]
+    },
+    {
+        "id" : "32",
+        "name" : "Lounge Chairs",
+        "children" : []
+    },
+    {
+        "id" : "37",
+        "name" : "Sunbeds",
+        "children" : []
+    },
+    {
+        "id" : "",
+        "name" : "Chairs",
+        "children" : [
+            {
+                "id" : 23,
+                "name" : "Outdoor Bar Chairs",
+                "param" : ""
+            },
+            {
+                "id" : 25,
+                "name" : "Outdoor Dining Chairs",
+                "param" : "dining,arm"
+            },
+            {
+                "id" : 25,
+                "name" : "Outdoor Side Chairs",
+                "param" : "side"
+            }
+        ]
+    },
+    {
+        "id" : "",
+        "name" : "Tables",
+        "children" : [
+            {
+                "id" : 28,
+                "name" : "Outdoor Dining Tables",
+                "param" : ""
+            },
+            {
+                "id" : 15,
+                "name" : "Outdoor Coffe Tables & Low Table",
+                "param" : ""
+            },
+            {
+                "id" : 31,
+                "name" : "Outdoor Side Table",
+                "param" : ""
+            },
+            {
+                "id" : 24,
+                "name" : "Outdoor Bar Table",
+                "param" : ""
+            }
+        ]
+    }
+
+]

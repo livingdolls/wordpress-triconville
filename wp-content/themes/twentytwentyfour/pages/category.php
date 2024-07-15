@@ -30,8 +30,8 @@ $(document).ready(function () {
             
             let productCards = res.product_list.map(pro => {
                 return `<a href="http://192.168.88.178:82/products/${pro.id}" class="product__card gap-2 product__id-${pro.id}">
-                            <div class="container__image bg-gray-100">
-                                <img src="${pro.product_image}" height="384px" width="384px" class="h-[384px] w-[384px] mx-auto" />
+                            <div class="container__image bg-gray-100 h-[384px] flex flex-col items-center justify-center">
+                                <img src="${pro.product_image}" height="384px" width="384px" />
                             </div>
 
                             <div class="product__card-content p-2">

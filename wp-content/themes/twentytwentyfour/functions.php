@@ -244,6 +244,32 @@ add_action( 'rest_api_init', function() {
 
 });
 
+// JSON PRODUCT API
+	add_action( 'rest_api_init', function () {
+		register_rest_route( 'wp/v2', '/product_service/', array(
+			'methods' => 'GET',
+			'callback' => 'jsonApi',
+		) );
+	} );
+
+	function jsonApi() {
+		$json_file_path = get_template_directory() . '/api/product.json';
+
+		if ( ! file_exists( $json_file_path ) ) {
+			return new WP_Error( 'no_file', 'File not found', array( 'status' => 404 ) );
+		}
+	
+		$json_content = file_get_contents( $json_file_path );
+		$data = json_decode( $json_content, true );
+	
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			return new WP_Error( 'json_error', 'Error decoding JSON', array( 'status' => 500 ) );
+		}
+		return new WP_REST_Response( $data, 200 );
+	}
+	
+// END JSON PRODUCT API
+
 
 // CUSTOM Collections
 add_action('init', function(){
@@ -300,6 +326,26 @@ add_action( 'template_include', function( $template ) {
     }
  
     return get_template_directory() . '/pages/category.php';
+} );
+
+// SELECTED PRODUCT
+
+add_action('init', function(){
+    add_rewrite_rule( 'selected/([a-z0-9]+)[/]?$', 'index.php?selected=$matches[1]', 'top' );
+});
+
+add_filter( 'query_vars', function( $query_vars ) {
+    $query_vars[] = 'selected';
+    return $query_vars;
+} );
+
+add_action( 'template_include', function( $template ) {
+
+    if ( get_query_var( 'selected' ) == false || get_query_var( 'selected' ) == '' ) {
+        return $template;
+    }
+ 
+    return get_template_directory() . '/pages/selected-products.php';
 } );
 
 // TAILWIND INIT
