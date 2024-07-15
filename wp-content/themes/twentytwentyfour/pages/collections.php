@@ -1,10 +1,10 @@
 <?php
+    get_header();
     echo do_shortcode("[hfe_template id='98']");
     $character_slug = get_query_var( 'collection' );
 ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js "></script>
 <link href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css " rel="stylesheet">
 
@@ -18,7 +18,10 @@
             headers: {
                 'Authorization' : 'Token 09633df1426fce26fc53de676e8bb65f47a0dcf1',
             },
-            success: function(res) {
+            beforeSend: () => {
+                // TODO ::SKELETON
+            },
+                success: function(res) {
                 console.log(res);
                 $('#container__<?= $character_slug ?>').append(`
                     <section class="banner relative">

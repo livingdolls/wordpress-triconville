@@ -1,0 +1,20 @@
+{
+  "name": "twentytwentyfour",
+  "version": "1.0.0",
+  "description": "=== Twenty Twenty-Four === Contributors: wordpressdotorg Requires at least: 6.4 Tested up to: 6.5 Requires PHP: 7.0 Stable tag: 1.1 License: GPLv2 or later License URI: http://www.gnu.org/licenses/gpl-2.0.html",
+  "main": "index.js",
+  "scripts": {
+    "buildtw": "npx postcss ./tailwind.css -o ./output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.4"
+  }
+}
