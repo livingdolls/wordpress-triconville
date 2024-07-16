@@ -120,7 +120,6 @@ $(document).ready(function(){
                         url: "http://192.168.88.178:82/?rest_route=/wp/v2/product_service",
                         type: "GET",
                         success: function(productsRes) {
-                            console.log(productsRes)
                             let productsHtml = '<div id="products__dropdown" class="dropdown-content">';
                             productsRes.forEach(k => {
                                 productsHtml += `
@@ -137,9 +136,9 @@ $(document).ready(function(){
 
                             $('#navbar__category').append(`
                                 <div class="dropdown products__nav">
-                                    <button class="dropbtn">${e.name}
+                                    <a href="${e.href}" class="dropbtn !float-none block">${e.name}
                                         <i class="fa fa-caret-down"></i>
-                                    </button>
+                                    </a>
                                     ${productsHtml}
                                 </div>
                             `);

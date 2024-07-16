@@ -28,7 +28,7 @@ $(document).ready(function () {
             $('#category__name').append(res.name);
             $('#category__description').append(res.description);
             
-            let productCards = res.product_list.map(pro => {
+            let productCards = res.product_list.filter(k => k.brand === 3).map(pro => {
                 return `<a href="http://192.168.88.178:82/products/${pro.id}" class="product__card gap-2 product__id-${pro.id}">
                             <div class="container__image bg-gray-100 h-[384px] flex flex-col items-center justify-center">
                                 <img src="${pro.product_image}" height="384px" width="384px" />

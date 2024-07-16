@@ -329,7 +329,6 @@ add_action( 'template_include', function( $template ) {
 } );
 
 // SELECTED PRODUCT
-
 add_action('init', function(){
     add_rewrite_rule( 'selected/([a-z0-9]+)[/]?$', 'index.php?selected=$matches[1]', 'top' );
 });
@@ -348,11 +347,13 @@ add_action( 'template_include', function( $template ) {
     return get_template_directory() . '/pages/selected-products.php';
 } );
 
+
 // TAILWIND INIT
 
 function enqueue_styles() {
 
     wp_enqueue_style('tailwind-style', get_template_directory_uri() . '/output.css', array(), '1.0.0');
+	wp_enqueue_style('global', get_template_directory_uri() . '/global.css', array(), '1.0.0');
 
 }
 

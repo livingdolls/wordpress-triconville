@@ -1,0 +1,11 @@
+.elementor.elementor-98 > div {
+    padding: 0;
+}
+
+main {
+    margin: 0;
+}
+
+header.wp-block-template-part > div > div {
+    width: 100%;
+}
