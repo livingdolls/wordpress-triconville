@@ -1,7 +1,16 @@
+<?php
+/*
+Template Name: List Collections
+*/
+
+    get_header();
+    echo do_shortcode("[hfe_template id='98']");
+?>
+
 <div id="collection__header" class="w-full flex flex-row gapx-5"></div>
 
 <section class="container__collections">
-    <div class="list__collections grid grid-cols-3 gap-4" id="list__collections"></div> 
+    <div class="list__collections flex flex-col" id="list__collections"></div> 
 </section>
 
     <script>
@@ -29,12 +38,16 @@
                         })                    
 
                         filterCollection.forEach(e => {
+                            let splitImage = e.collection_image.split('/')
+                            splitImage[9] = 1920;
+                            let buildUrl =splitImage.join('/');
+                            
                             const collectionCard = `
-                                <a href="http://192.168.88.178:82/collections/${e.id}" class="card__collections">
-                                    <img class="w-full object-cover" src="${e.collection_image_512}" alt="${e.name}" />
-                                    <div class="card__content px-3 py-5">
-                                        <h3>${e.name}</h3>
-                                        <p>${e.description}</p>
+                                <a href="http://192.168.88.178:82/collections/${e.id}" class="card__collections relative my-5">
+                                    <img class="w-full object-cover" src="${buildUrl}" alt="${e.name}" width="1920" height="1079" />
+
+                                    <div class="card__content absolute px-3 py-5">
+                                        <h2 class="text-8xl text-white font-bold">${e.name}</h2>
                                     </div>
                                 </a>
                             `;
@@ -71,46 +84,10 @@
         });
     </script>
     
-
 <style>
-    .container__collections {
-        max-width: 1440px;
-        margin: 0px auto;
-    }
-
-    .card__collections {
-        border-radius: 4px;
-        box-shadow: 0 0 10px rgba(0,0,0,.2);
-        margin-bottom: 1rem;
-        display: block;
-        color: inherit;
-        background-color: #fff;
-        text-decoration: none;
-        overflow: hidden;
-        transition: .5s all ease-in-out;
-    }
-
-    .card__collections > img {
-        max-height: 262px;
-    }
-
-    .card__collections > .card__content > h3 {
-        font-size: 28px;
-        font-weight: 500;
-        line-height: 40px;
-        text-align: left;
-        color: #000;
-    }
-
-    .card__collections > .card__content > p {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
-        text-align: left;
-        color: #000;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
-        overflow: hidden;
+    .card__content {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 </style>

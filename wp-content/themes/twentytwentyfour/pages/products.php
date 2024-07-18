@@ -86,7 +86,7 @@ $character_slug = get_query_var('product');
 </div>
 
 <script>
-    $(document).ready(function () {
+    jQuery(document).ready(function ($) {
         $.ajax({
             url: `https://platform.indospacegroup.com/v1_products_det/<?= $character_slug ?>/`,
             type: 'GET',
