@@ -4,9 +4,10 @@
     $character_slug = get_query_var( 'collection' );
 ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js "></script>
 <link href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css " rel="stylesheet">
+
+<div id="collection__header" class="w-full flex flex-row gapx-5"></div>
 
 <div id="container__<?=$character_slug ?>"></div>
 
@@ -51,6 +52,7 @@
                     </section>
 
                     <section class="collection__product relative">
+                        <h3 class="text-center uppercase font-bold">${res.name} Collections</h3>
                         <button id="product__next"></button>
                         <div class="list__card grid grid-cols-3 mt-5 gap-4 container mx-auto">
                             ${res.product_list.map(pr => `<a href="http://192.168.88.178:82/products/${pr.id}" class="collection__product-card border">
@@ -80,6 +82,9 @@
                 console.error('Error fetching data:', error);
             }
         });
+
+
+        
     });
 </script>
 

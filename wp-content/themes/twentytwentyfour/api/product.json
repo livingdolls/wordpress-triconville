@@ -1,6 +1,6 @@
 [
     {
-        "id" : "",
+        "id" : "39,30,36",
         "name" : "Sofa",
         "children" : [
             {
@@ -26,12 +26,12 @@
         "children" : []
     },
     {
-        "id" : "37",
+        "id" : "37,5",
         "name" : "Sunbeds",
         "children" : []
     },
     {
-        "id" : "",
+        "id" : "23,25",
         "name" : "Chairs",
         "children" : [
             {
@@ -52,7 +52,7 @@
         ]
     },
     {
-        "id" : "",
+        "id" : "28,15,31,24",
         "name" : "Tables",
         "children" : [
             {

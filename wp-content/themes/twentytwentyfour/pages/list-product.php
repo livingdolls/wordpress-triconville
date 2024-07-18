@@ -9,7 +9,7 @@ Template Name: List Product
 ?>
 
 <div id="header__product" class="flex flex-row"> </div>
-<div class="list-product">
+<div class="list-product container mx-auto grid gap-4 grid-cols-3" id="product__collections">
 
 </div>
 
@@ -39,8 +39,6 @@ Template Name: List Product
 
         function loadAllProduct(page){
             const all_product = [39,30,36,32,37,23,25,28,15,31,24];
-
-            console.log(page)
     
             $.ajax({
                 url: `https://platform.indospacegroup.com/v1_categories_det/${all_product[page]}/`,
@@ -53,9 +51,20 @@ Template Name: List Product
                 },
                 success : (res) => {
 
-                    console.log(res)
+                    let product = res.product_list.filter(k => k.brand === 3).map(pro => {
+                        return `<a href="http://192.168.88.178:82/products/${pro.id}" class="product__card gap-2 product__id-${pro.id}">
+                            <div class="container__image bg-gray-100 h-[384px] flex flex-col items-center justify-center">
+                                <img src="${pro.product_image}" height="384px" width="384px" />
+                            </div>
 
-                    // TODO :: ALL PRODUCTS
+                            <div class="product__card-content p-2">
+                                <h3>${pro.name}</h3>
+                                <span>${pro.sku}</span>
+                            </div>
+                        </a>`;
+                    }).join('')
+
+                    $('#product__collections').append(product)
 
                     if(typeof all_product[page] !== undefined){
                         loadAllProduct(page + 1)
