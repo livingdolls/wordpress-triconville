@@ -6,14 +6,13 @@ $character_slug = get_query_var('selected');
 <div id="header__product" class="flex flex-row bg-gray-100"> </div>
 
 
-<section class="banner">
-</section>
+<section id="header__banner" class="banner relative"></section>
 
 <section class="filter__product flex justify-center flex-col items-center my-8 p-8">
-    <h3>EXPLORE OUR OUTDOOR</h3>
+    <h3 id="title__page" class="uppercase mt-8 mb-8">EXPLORE OUR OUTDOOR </h3>
     <div class="relative inline-block w-64">
         <button id="dropdownButton"
-            class="w-full bg-white border border-gray-950 text-gray-950 py-2 px-4 focus:outline-none focus:shadow-outline">
+            class="w-full flex flex-row justify-between bg-white border border-gray-950 text-gray-950 py-2 px-4 focus:outline-none focus:shadow-outline">
             All Types
             <svg class="w-5 h-5 float-right mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -41,6 +40,7 @@ $character_slug = get_query_var('selected');
             url: "http://192.168.88.178:82/?rest_route=/wp/v2/product_service",
             type: "GET",
             success: (res) => {
+
                 res.forEach(e => {
                     const head_product = `
                         <div class="p-3">
@@ -50,6 +50,17 @@ $character_slug = get_query_var('selected');
 
                     $('#header__product').append(head_product)
                 });
+
+                // Get Category Page
+
+                let findPosition = res.find(o => o.id.includes(parseFilter[0]))
+
+                $('#header__banner').append(`
+                    <img src="${findPosition.image}" alt="${findPosition.name}" width="1920" height="1079" />                
+                    <h1 class="absolute inset-0 flex items-center justify-center text-white text-4xl md:text-6xl">${findPosition.name}</h1>
+                `)
+
+                $('#title__page').append(`${findPosition.name}`)
 
                 // PUSH FILTER
                 let findChild = res.find(e => e.id == parseFilter[0]);
@@ -67,6 +78,7 @@ $character_slug = get_query_var('selected');
 
 
         if (check_ids.length <= 1) {
+
             $.ajax({
                 url: `https://platform.indospacegroup.com/v1_categories_det/${parseFilter[0]}/`,
                 type: 'GET',
