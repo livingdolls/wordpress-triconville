@@ -2,6 +2,8 @@
     {
         "id" : "39,30,36",
         "name" : "Sofa",
+        "slug" : "sofa",
+        "image" : "https://storage.googleapis.com/pimassest1/asset/ALP-02/ambience_image/1920/alpha_sofa_lifestyle_04.jpg",
         "children" : [
             {
                 "id" : 39,
@@ -23,16 +25,22 @@
     {
         "id" : "32",
         "name" : "Lounge Chairs",
+        "slug" : "lounge-chairs",
+        "image" : "https://storage.googleapis.com/pimassest1/asset/TORA-01/ambience_image/1920/tora-modular-sofa-lifestyle-4.jpg",
         "children" : []
     },
     {
         "id" : "37,5",
         "name" : "Sunbeds",
+        "slug" : "sunbeds",
+        "image" : "https://storage.googleapis.com/pimassest1/asset/TIMO-LG/ambience_image/1920/timo_lounger_lifestyle_02__st_round_teak.jpg",
         "children" : []
     },
     {
         "id" : "23,25",
         "name" : "Chairs",
+        "slug" : "chairs",
+        "image" : "https://storage.googleapis.com/pimassest1/asset/ALP-DC/ambience_image/1920/alpha_dining_arm_chair__ara_160_lifestyle_03.jpg",
         "children" : [
             {
                 "id" : 23,
@@ -54,6 +62,8 @@
     {
         "id" : "28,15,31,24",
         "name" : "Tables",
+        "slug" : "tables",
+        "image" : "https://storage.googleapis.com/pimassest1/asset/ARA-DT-100/ambience_image/1920/ara-dt-teak-100-lifestyle-2.jpg",
         "children" : [
             {
                 "id" : 28,
