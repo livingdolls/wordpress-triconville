@@ -9,3 +9,7 @@ main {
 header.wp-block-template-part > div > div {
     width: 100%;
 }
+
+body {
+    background-color: #fff;
+}

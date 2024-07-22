@@ -37,14 +37,10 @@ Template Name: List Collections
                             return tcv_collection.includes(k.id)
                         })                    
 
-                        filterCollection.forEach(e => {
-                            let splitImage = e.collection_image.split('/')
-                            splitImage[9] = 1920;
-                            let buildUrl =splitImage.join('/');
-                            
+                        filterCollection.forEach(e => {                            
                             const collectionCard = `
                                 <a href="http://192.168.88.178:82/collections/${e.id}" class="card__collections relative my-5">
-                                    <img class="w-full object-cover" src="${buildUrl}" alt="${e.name}" width="1920" height="1079" />
+                                    <img class="w-full object-cover" src="${e.collection_image_1920}" alt="${e.name}" width="1920" height="1079" />
 
                                     <div class="card__content absolute px-3 py-5">
                                         <h2 class="text-8xl text-white font-bold">${e.name}</h2>
@@ -55,7 +51,7 @@ Template Name: List Collections
 
                             const head__col = `
                                 <div class="p-3">
-                                    <a href="http://localhost:82/collections/${e.id}">${e.name}</a>    
+                                    <a href="http://192.168.88.178:82/collections/${e.id}">${e.name}</a>    
                                 </div>
                             `
 
