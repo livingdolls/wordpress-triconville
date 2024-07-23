@@ -1,8 +1,32 @@
 <?php
-get_header();
-echo do_shortcode("[hfe_template id='98']");
+
 $character_slug = get_query_var('product');
+$api_endpoint = "https://platform.indospacegroup.com/v1_products_det/" . $character_slug;
+$response = wp_remote_get( $api_endpoint , array( 
+    'timeout' => 10,
+    'headers' => array( 
+                'Authorization' => 'Token 09633df1426fce26fc53de676e8bb65f47a0dcf1',
+    ) 
+));
+
+$product_data = json_decode(wp_remote_retrieve_body($response), true);
+
+$meta_title = isset($product_data['meta_title']) ? $product_data['meta_title'] : 'Default Product Title';
+$meta_description = isset($product_data['meta_description']) ? $product_data['meta_description'] : 'Default Product Title';
+$meta_keyword = isset($product_data['meta_keyword']) ? $product_data['meta_keyword'] : 'Default Product Title';
 ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?= esc_html($meta_description); ?>">
+    <meta name="keywords" content="<?= esc_html($meta_keyword); ?>">
+    <title><?= esc_html($meta_title); ?></title>
+    <?php wp_head(); ?>
+</head>
+
+<?= do_shortcode("[hfe_template id='98']"); ?>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js "></script>
 <link href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css " rel="stylesheet">
 <!-- Fancybox -->
