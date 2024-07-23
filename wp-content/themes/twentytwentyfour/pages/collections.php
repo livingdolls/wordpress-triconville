@@ -111,6 +111,10 @@
         height: auto;
         margin-left: 1rem;
         border-radius: 4px;
+        transition: 0.3s;
+    }
+    
+    .collection__product-card:hover {        
         box-shadow: 0 0 10px rgba(0,0,0,.2);
     }
 

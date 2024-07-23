@@ -35,90 +35,93 @@ echo do_shortcode("[hfe_template id='98']");
 
 <script>
     $(document).ready(function () {
-        let category = [];
+        let categories = [];
 
-        $.ajax({
-            url: "http://192.168.88.178:82/?rest_route=/wp/v2/product_service",
-            type: "GET",
-            success: (res) => {
-                category.push(res)
+    $.ajax({
+        url: "http://192.168.88.178:82/?rest_route=/wp/v2/product_service",
+        type: "GET",
+        success: (res) => {
+            categories = res;
+            categories.forEach(category => {
+                const categoryElement = `
+                    <div class="p-3">
+                        <a href="http://192.168.88.178:82/selected/${category.id}">${category.name}</a>
+                    </div>
+                `;
+                $('#header__product').append(categoryElement);
+            });
+        },
+        error: () => {
+            console.error("Failed to fetch categories.");
+        }
+    });
 
-                res.forEach(e => {
-                    const head_product = `
-                        <div class="p-3">
-                            <a href="http://192.168.88.178:82/selected/${e.id}">${e.name}</a>
-                        </div>
-                    `
+    let page = 0;
+    let stop = false;
 
-                    $('#header__product').append(head_product)
-                });
+        // rekursif
+        function loadAllProducts(page) {
+            const allProducts = [39, 30, 36, 32, 37, 23, 25, 28, 15, 31, 24];
 
+            if (page >= allProducts.length) {
+                stop = true;
+                return;
             }
-        })
-
-        let page = 0;
-        let stop = false;
-
-        function loadAllProduct(page) {
-            const all_product = [39, 30, 36, 32, 37, 23, 25, 28, 15, 31, 24];
 
             $.ajax({
-                url: `https://platform.indospacegroup.com/v1_categories_det/${all_product[page]}/`,
+                url: `https://platform.indospacegroup.com/v1_categories_det/${allProducts[page]}/`,
                 type: 'GET',
                 headers: {
                     'Authorization': 'Token 09633df1426fce26fc53de676e8bb65f47a0dcf1'
                 },
                 beforeSend: () => {
-                    // TODO :: ADD SKELETON
+                    // TODO: Add loading indicator
                 },
                 success: (res) => {
-                    let findCategory = category[0].find(o => o.id.includes(all_product[page]))
+                    const category = categories.find(c => c.id.includes(allProducts[page]));
 
-                    let checkElement = $(`#cat-${findCategory.slug}`)
+                    if (!category) {
+                        loadAllProducts(page + 1);
+                        return;
+                    }
 
-
-                    if (checkElement.length === 0) {
-                        $('#product__collections').append(`<div class="mt-5 mb-5" id="cat-${findCategory.slug}">
-                            <h3 class="text-center text-3xl uppercase mb-3">${findCategory.name}</h3>
-    
-                            <div id="list__cat-${findCategory.slug}" class="grid gap-4 grid-cols-3"></div>
-                        </div>`)
-
-                        // Append Filter
+                    const categoryElement = $(`#cat-${category.slug}`);
+                    if (categoryElement.length === 0) {
+                        const newCategoryElement = `
+                            <div class="mt-5 mb-5" id="cat-${category.slug}">
+                                <h3 class="text-center text-3xl uppercase mb-3">${category.name}</h3>
+                                <div id="list__cat-${category.slug}" class="grid gap-4 grid-cols-3"></div>
+                            </div>
+                        `;
+                        $('#product__collections').append(newCategoryElement);
                         $('#filter_child').append(`
-                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" data-value="${findCategory.slug}">${findCategory.name}</li>
-                        `)
+                            <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" data-value="${category.slug}">${category.name}</li>
+                        `);
                     }
 
-
-                    let product = res.product_list.filter(k => k.brand === 3).map(pro => {
-                        return `<a href="http://192.168.88.178:82/products/${pro.id}" class="product__card gap-2 product__id-${pro.id}">
-                            <div class="container__image bg-gray-100 h-[384px] flex flex-col items-center justify-center">
-                                <img src="${pro.product_image}" height="384px" width="384px" />
+                    const products = res.product_list.filter(p => p.brand === 3).map(product => `
+                        <a href="http://192.168.88.178:82/products/${product.id}" class="product__card border gap-2 product__id-${product.id}">
+                            <div class="container__image h-[384px] flex flex-col items-center justify-center">
+                                <img src="${product.product_image}" height="384px" width="384px" />
                             </div>
-
                             <div class="product__card-content p-2">
-                                <h3>${pro.name}</h3>
-                                <span>${pro.sku}</span>
+                                <h3>${product.name}</h3>
+                                <span>${product.sku}</span>
                             </div>
-                        </a>`;
-                    }).join('')
+                        </a>
+                    `).join('');
 
-                    $(`#list__cat-${findCategory.slug}`).append(product);
-
-                    if (typeof all_product[page] !== undefined) {
-                        loadAllProduct(page + 1)
-                    } else {
-                        stop = true
-                    }
+                    $(`#list__cat-${category.slug}`).append(products);
+                    loadAllProducts(page + 1);
                 },
                 error: () => {
+                    console.error("Failed to fetch products.");
                     stop = true;
                 }
-            })
+            });
         }
 
-        loadAllProduct(page)
+        loadAllProducts(page);
 
 
         // DROPDOWN
@@ -176,3 +179,14 @@ echo do_shortcode("[hfe_template id='98']");
 
     }) 
 </script>
+
+<style>
+    .product__card {
+        border-radius: 4px;
+        transition: 0.3s;
+    }
+    
+    .product__card:hover {
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
+    }
+</style>

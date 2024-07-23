@@ -1,4 +1,6 @@
 <?php
+
+
 get_header();
 echo do_shortcode("[hfe_template id='98']");
 $character_slug = get_query_var('selected');
@@ -147,8 +149,8 @@ $character_slug = get_query_var('selected');
 
         const buildProduct = (product, id) => {
             let productCards = product.filter(k => k.brand === 3).map(pro => {
-                return `<a href="http://192.168.88.178:82/products/${pro.id}" data-category="${id}" class="product__card gap-2 product__id-${pro.id}">
-                                        <div class="container__image bg-gray-100 h-[384px] flex flex-col items-center justify-center">
+                return `<a href="http://192.168.88.178:82/products/${pro.id}" data-category="${id}" class="product__card border gap-2 product__id-${pro.id}">
+                                        <div class="container__image h-[384px] flex flex-col items-center justify-center">
                                             <img src="${pro.product_image}" height="384px" width="384px" />
                                         </div>
             
@@ -214,3 +216,14 @@ $character_slug = get_query_var('selected');
 
     });
 </script>
+
+<style>
+    .product__card {
+        border-radius: 4px;
+        transition: 0.3s;
+    }
+    
+    .product__card:hover {
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
+    }
+</style>
