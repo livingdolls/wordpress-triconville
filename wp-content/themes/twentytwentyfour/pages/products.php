@@ -22,7 +22,7 @@ $meta_keyword = isset($product_data['meta_keyword']) ? $product_data['meta_keywo
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= esc_html($meta_description); ?>">
     <meta name="keywords" content="<?= esc_html($meta_keyword); ?>">
-    <title><?= esc_html($meta_title); ?></title>
+    <title>Triconville | <?= esc_html($meta_title); ?></title>
     <?php wp_head(); ?>
 </head>
 
@@ -37,12 +37,11 @@ $meta_keyword = isset($product_data['meta_keyword']) ? $product_data['meta_keywo
         <div class="lg:w-4/5 mx-auto flex flex-row">
             <div class="image__gallery" style="max-width:960px">
                 <div class="grid gap-4">
-                    <div id="main_slider" class="slick-slider">
-                    </div>
+                    <!-- Main Image -->
+                    <div id="main_slider" class="slick-slider"></div>
 
                     <!-- Thumbnail Navigation -->
-                    <div id="thumbnail_slider" class="slick-slider mt-2 grid grid-cols-5 gap-4">
-                    </div>
+                    <div id="thumbnail_slider" class="slick-slider mt-2 grid grid-cols-5 gap-4"></div>
                 </div>
             </div>
             <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0" style="cursor: auto;">
